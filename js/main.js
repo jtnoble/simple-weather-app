@@ -123,22 +123,21 @@ async function _init() {
     const card1 = document.getElementById("popular-places-card-1");
     const card1Obj = new Card("Los Angeles");
     await card1Obj.init();
+    card1.innerHTML = formatTemp(card1Obj.getTemp());
 
     const card2 = document.getElementById("popular-places-card-2");
     const card2Obj = new Card("Denver");
     await card2Obj.init();
+    card2.innerHTML = formatTemp(card2Obj.getTemp());
 
     const card3 = document.getElementById("popular-places-card-3");
     const card3Obj = new Card("Chicago");
     await card3Obj.init();
+    card3.innerHTML = formatTemp(card3Obj.getTemp());
 
     const card4 = document.getElementById("popular-places-card-4");
     const card4Obj = new Card("New York City");
     await card4Obj.init();
-
-    card1.innerHTML = formatTemp(card1Obj.getTemp());
-    card2.innerHTML = formatTemp(card2Obj.getTemp());
-    card3.innerHTML = formatTemp(card3Obj.getTemp());
     card4.innerHTML = formatTemp(card4Obj.getTemp());
 }
 
