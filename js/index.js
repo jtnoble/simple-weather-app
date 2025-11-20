@@ -11,6 +11,8 @@ submitButtonMainPage.addEventListener("click", async () => {
 
     console.log(`Clicked Submit with State: ${createdCard.state} and City: ${createdCard.city}.`);
     console.log(`Temperatrure is: ${createdCard.getTemp()}`);
+
+    window.location.href = `pages/weather.html?state=${createdCard.state}&city=${createdCard.city}`;
 }); 
 
 // Formats city names seperated by whitespace into a format that can be used with geo API
