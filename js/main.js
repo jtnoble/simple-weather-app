@@ -1,11 +1,16 @@
 const submitButtonMainPage = document.getElementById("submit-button-main-page")
 
-// TODO: Replace with API
-submitButtonMainPage.addEventListener("click", () => { 
+// Temp Testing with submit button
+submitButtonMainPage.addEventListener("click", async () => { 
     const state = document.getElementById("state");
     const city = document.getElementById("city");
+    
+    const createdCard = new Card(city.value, state.value);
+    await createdCard.init();
 
-    console.log(`Clicked Submit with State: ${state.value} and City: ${city.value}.`);
+
+    console.log(`Clicked Submit with State: ${createdCard.state} and City: ${createdCard.city}.`);
+    console.log(`Temperatrure is: ${createdCard.getTemp()}`);
 }); 
 
 // Formats city names seperated by whitespace into a format that can be used with geo API
