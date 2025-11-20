@@ -5,14 +5,18 @@ submitButtonMainPage.addEventListener("click", async () => {
     const state = document.getElementById("state");
     const city = document.getElementById("city");
     
-    const createdCard = new Card(city.value, state.value);
-    await createdCard.init();
+    try {
+         const point = await fetchPoint(city.value, state.value);
 
+         if (point == null || typeof point !== 'object') {
+            throw new Error("State and City parameters are invalid, try again");
+         }
 
-    console.log(`Clicked Submit with State: ${createdCard.state} and City: ${createdCard.city}.`);
-    console.log(`Temperatrure is: ${createdCard.getTemp()}`);
+         window.location.href = `pages/weather.html?state=${state.value}&city=${city.value}`;
 
-    window.location.href = `pages/weather.html?state=${createdCard.state}&city=${createdCard.city}`;
+    }catch(error) {
+        console.error(error);
+    }
 }); 
 
 // Formats city names seperated by whitespace into a format that can be used with geo API
@@ -117,7 +121,6 @@ class Card {
 
         this.#forcastHourly = await fetchForcastHourly(await fetchWeather(this.#lat, this.#lon));
         this.#temp = await getCurrentTemp(this.#forcastHourly);
-
     }
 
     getTemp() {

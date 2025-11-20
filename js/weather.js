@@ -2,7 +2,7 @@
 setTimeout(() => {
     document.getElementById("temperature").textContent = "72°F";
     let queryParams = getQueryParams();
-    console.log(`City: ${queryParams.city} | State ${queryParams.state}`)
+    console.log(`City: ${queryParams.city} | State ${queryParams.state}`);
 }, 3000);
 
 /*
