@@ -1,4 +1,7 @@
-const submitButtonMainPage = document.getElementById("submit-button-main-page")
+import Card from './api.js';
+import {formatTemp, fetchPoint} from './api.js';
+
+const submitButtonMainPage = document.getElementById("submit-button-main-page");
 
 // Temp Testing with submit button
 submitButtonMainPage.addEventListener("click", async () => { 
@@ -19,114 +22,114 @@ submitButtonMainPage.addEventListener("click", async () => {
     }
 }); 
 
-// Formats city names seperated by whitespace into a format that can be used with geo API
-async function formatCity(city) {
-    const cityArray = city.split(' ');
-    let citySplit = "";
-    for (word of cityArray) {
-        word === cityArray.at(-1) ?
-        citySplit += `${word}` :
-        citySplit += `${word}+`;
-    }
+// // Formats city names seperated by whitespace into a format that can be used with geo API
+// async function formatCity(city) {
+//     const cityArray = city.split(' ');
+//     let citySplit = "";
+//     for (word of cityArray) {
+//         word === cityArray.at(-1) ?
+//         citySplit += `${word}` :
+//         citySplit += `${word}+`;
+//     }
 
-    return citySplit;
-}
+//     return citySplit;
+// }
 
-// API's
-async function fetchPoint(city, state) {
-    const formatedCity = await formatCity(city);
+// // API's
+// async function fetchPoint(city, state) {
+//     const formatedCity = await formatCity(city);
 
-    try {
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?city=${formatedCity}&state=${state}&format=jsonv2`);
+//     try {
+//         const response = await fetch(`https://nominatim.openstreetmap.org/search?city=${formatedCity}&state=${state}&format=jsonv2`);
 
         
-        if (!response.ok) {
-            throw new Error("Fetch failed")
-        }
+//         if (!response.ok) {
+//             throw new Error("Fetch failed")
+//         }
 
-        const data = await response.json();
-        const lat = data[0]?.lat;
-        const lon = data[0]?.lon;
+//         const data = await response.json();
+//         const lat = data[0]?.lat;
+//         const lon = data[0]?.lon;
 
-        return {lat, lon};
+//         return {lat, lon};
 
-    }catch(error) {
-        console.error(error);
-    }
-}
+//     }catch(error) {
+//         console.error(error);
+//     }
+// }
 
-async function fetchWeather(lat, lon) {
+// async function fetchWeather(lat, lon) {
     
-    try {
-        const response = await fetch(`https://api.weather.gov/points/${lat},${lon}`)
+//     try {
+//         const response = await fetch(`https://api.weather.gov/points/${lat},${lon}`)
 
-        if (response == undefined) {
-            throw new Error("fetchWeather() resonse undefined");
-        }
+//         if (response == undefined) {
+//             throw new Error("fetchWeather() resonse undefined");
+//         }
 
-        const data = await response.json();
+//         const data = await response.json();
 
-        return data.properties.forecastHourly;
+//         return data.properties.forecastHourly;
 
-    }catch(error) {
-        console.error(error);
-    }
-}
+//     }catch(error) {
+//         console.error(error);
+//     }
+// }
 
-async function fetchForcastHourly(stationAPI) {
+// async function fetchForcastHourly(stationAPI) {
     
-    try {
-        const resonse = await fetch(stationAPI);
+//     try {
+//         const resonse = await fetch(stationAPI);
 
-        if (resonse == undefined) {
-            throw new Error("fetchStation() resonse undefined");
-        }
+//         if (resonse == undefined) {
+//             throw new Error("fetchStation() resonse undefined");
+//         }
 
-        const data = await resonse.json();
+//         const data = await resonse.json();
 
-        return data;
+//         return data;
 
-    }catch(error) {
-        console.error(error);
-    }
-}
+//     }catch(error) {
+//         console.error(error);
+//     }
+// }
 
-// Getters
-function getCurrentTemp(data) {
-    return data.properties.periods[0].temperature;
-}
+// // Getters
+// function getCurrentTemp(data) {
+//     return data.properties.periods[0].temperature;
+// }
 
-// Formatters
-function formatTemp(temp) {
-    return `${temp}° F`;
-}
+// // Formatters
+// function formatTemp(temp) {
+//     return `${temp}° F`;
+// }
 
-class Card {
+// class Card {
 
-    #point;
-    #lat;
-    #lon;
-    #forcastHourly;
-    #temp;
+//     #point;
+//     #lat;
+//     #lon;
+//     #forcastHourly;
+//     #temp;
 
-    constructor(city, state) {
-        this.city = city;
-        this.state = state;
-    }
+//     constructor(city, state) {
+//         this.city = city;
+//         this.state = state;
+//     }
 
-    async init() {
-        this.#point = await fetchPoint(this.city, this.state);
-        this.#lat = this.#point.lat;
-        this.#lon = this.#point.lon;
+//     async init() {
+//         this.#point = await fetchPoint(this.city, this.state);
+//         this.#lat = this.#point.lat;
+//         this.#lon = this.#point.lon;
 
-        this.#forcastHourly = await fetchForcastHourly(await fetchWeather(this.#lat, this.#lon));
-        this.#temp = await getCurrentTemp(this.#forcastHourly);
-    }
+//         this.#forcastHourly = await fetchForcastHourly(await fetchWeather(this.#lat, this.#lon));
+//         this.#temp = await getCurrentTemp(this.#forcastHourly);
+//     }
 
-    getTemp() {
-        return this.#temp;
-    }
-}
+//     getTemp() {
+//         return this.#temp;
+//     }
+// }
 
 async function _init() {
 
