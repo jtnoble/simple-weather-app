@@ -1,7 +1,15 @@
+import Card from './api.js';
+import { formatTemp } from './api.js';
+
 // Placeholder, should be replaced with actual API call logic.
-setTimeout(() => {
-    document.getElementById("temperature").textContent = "72°F";
+setTimeout(async () => {
     let queryParams = getQueryParams();
+
+    let weatherData = new Card(queryParams.city, queryParams.state);
+    await weatherData.init();
+
+    document.getElementById("temperature").textContent = formatTemp(weatherData.getTemp());
+
     console.log(`City: ${queryParams.city} | State ${queryParams.state}`)
 }, 3000);
 
