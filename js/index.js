@@ -8,7 +8,7 @@ submitButtonMainPage.addEventListener("click", async () => {
     try {
          const point = await fetchPoint(city.value, state.value);
 
-         if (point.lat === undefined || point.lon === undefined) {
+         if (point.lat == undefined || point.lon == undefined) {
             throw new Error("State and City parameters are invalid, try again");
          }
 
